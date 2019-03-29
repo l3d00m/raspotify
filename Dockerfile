@@ -2,6 +2,9 @@ FROM debian:stretch
 
 ENV INSIDE_DOCKER_CONTAINER 1
 
+# Required for alsa-sys to build
+ENV PKG_CONFIG_ALLOW_CROSS 1
+
 # Install git and compilers, let's toss gnupg and reprepro in there so we can
 # use this container to make the apt repo as well
 RUN apt-get update \
@@ -16,6 +19,8 @@ RUN apt-get update \
         python-setuptools \
         python-wheel \
         reprepro \
+        libasound2-dev \
+        pkg-config \
     && rm -rf /var/lib/apt/lists/*
 
 RUN pip install \
